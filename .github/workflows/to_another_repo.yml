@@ -1,7 +1,7 @@
-name: Push To Test1 Repo
+name: Push Server to Test Repo
 on:
   push:
-    branches: [ master ]
+    branches: [ sandbox ]
 jobs:
   repo-sync:
     runs-on: ubuntu-latest
@@ -9,28 +9,21 @@ jobs:
     - uses: actions/checkout@v2
       with:
         persist-credentials: false
-    - name: Get Testing1 Remote Set Up
+    - name: Set up remotes to Server Test Repo
       run: |
         git remote add testing https://github.com/watchpartyappmain/TestingRepo1.git
         git fetch --all
         git checkout -b sandbox testing/master
         git config --global user.email "watchpartyappmain@gmail.com"
         git config --global user.name "watchpartyappmain"
-        ### START EXPERIMENTAL CODE
-        git filter-branch --prune-empty --subdirectory-filter server master
-        ### END EXPERIMENTAL CODE
-        git merge -s ours master --allow-unrelated-histories
+        git filter-branch --prune-empty --subdirectory-filter server sandbox
+        git merge -s ours sandbox --allow-unrelated-histories
         git fetch --unshallow origin
-    - name: Push changes
+    - name: Push to Server Test Repo
       env:
         INPUT_GITHUB_TOKEN: ${{ secrets.personal_github_token }}
         REPOSITORY: 'watchpartyappmain/TestingRepo1'
         INPUT_BRANCH: 'master'
       run: |
         remote_repo="https://watchpartymainapp:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
-         git push "${remote_repo}" HEAD:${INPUT_BRANCH} --follow-tags --force;
-#       uses: ad-m/github-push-action@master
-#       with:
-#         github_token: ${{ secrets.personal_github_token }}
-#         repository: watchpartyappmain/TestingRepo1
-#         force: true
+        git push "${remote_repo}" HEAD:${INPUT_BRANCH} --follow-tags --force;
