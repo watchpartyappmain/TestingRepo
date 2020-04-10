@@ -13,7 +13,7 @@ jobs:
       run: |
         git remote add testing https://github.com/watchpartyappmain/TestingRepo1.git
         git fetch --all
-        git checkout -b sandbox testing/master
+        git checkout -b sandbox-sync testing/master
         git config --global user.email "watchpartyappmain@gmail.com"
         git config --global user.name "watchpartyappmain"
         git filter-branch --prune-empty --subdirectory-filter server sandbox
