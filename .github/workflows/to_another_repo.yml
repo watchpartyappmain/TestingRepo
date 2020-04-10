@@ -25,7 +25,8 @@ jobs:
         INPUT_BRANCH: 'master'
       run: |
         remote_repo="https://watchpartymainapp:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
-        git push "${remote_repo}" HEAD:${INPUT_BRANCH} --follow-tags --force;
+        git subtree push --prefix server "${remote_repo}" HEAD:${INPUT_BRANCH} --follow-tags --force;
+#        git push "${remote_repo}" HEAD:${INPUT_BRANCH} --follow-tags --force;
 #       uses: ad-m/github-push-action@master
 #       with:
 #         github_token: ${{ secrets.personal_github_token }}
