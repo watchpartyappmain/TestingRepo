@@ -20,15 +20,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Test api
+    - name: Test api and server
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
         cd api
         npm run test
-    - name: Test server
-    - run: |
         cd ../server
         npm run test
       env:
