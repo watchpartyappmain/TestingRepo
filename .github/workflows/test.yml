@@ -24,10 +24,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Run the tests
     - run: |
-        cd api
+        cd api/
+        npm install
         npm run test
-        cd ../server
+        cd ../server/
+        npm install
         npm run test
       env:
         CI: true
