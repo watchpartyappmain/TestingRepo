@@ -13,12 +13,15 @@ jobs:
       run: |
         git remote add testing https://github.com/watchpartyappmain/TestingRepo1.git
         git fetch --all
-        git checkout -b testing-master testing/master
+        # git checkout -b testing-master testing/master
+        git branch -D testing/master
+        git branch testing/master
+        git checkout branch/master
         git config --global user.email "watchpartyappmain@gmail.com"
         git config --global user.name "watchpartyappmain"
         git filter-branch --prune-empty --subdirectory-filter server master
-        git merge -s ours master --allow-unrelated-histories
-        git fetch --unshallow origin
+        # git merge -s ours master --allow-unrelated-histories
+        # git fetch --unshallow origin
     - name: Push to Server Test Repo
       env:
         INPUT_GITHUB_TOKEN: ${{ secrets.personal_github_token }}
