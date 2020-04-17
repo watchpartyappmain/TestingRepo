@@ -20,15 +20,24 @@ jobs:
         git fetch --all
         git filter-branch --prune-empty --subdirectory-filter server master
         echo Fetched and prunned server
-        git push testing --delete deploy-heroku
-        echo Deleted deploy-heroku
-        git checkout -b deploy-heroku
+    - name: Delete heroku-depoy on remote repo
+      env:
+        INPUT_GITHUB_TOKEN: ${{ secrets.personal_github_token }}
+        REPOSITORY: 'watchpartyappmain/TestingRepo1'
+        INPUT_BRANCH: 'heroku-deploy'
+      run: |
+        remote_repo="https://watchpartymainapp:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
+        git push "${remote_repo}" --delete ${INPUT_BRANCH} --force;
+
+    - name: Checkout new branch
+      run: |
+        git checkout -b deploy-heroku master
         echo Checkedout new deploy-heroku branch
     - name: Push to Server Test Repo
       env:
         INPUT_GITHUB_TOKEN: ${{ secrets.personal_github_token }}
         REPOSITORY: 'watchpartyappmain/TestingRepo1'
-        INPUT_BRANCH: 'master'
+        INPUT_BRANCH: 'heroku-deploy'
       run: |
         remote_repo="https://watchpartymainapp:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
         git push "${remote_repo}" HEAD:${INPUT_BRANCH} --follow-tags --force;
