@@ -14,7 +14,7 @@ jobs:
       run: |
         git config --global user.email "watchpartyappmain@gmail.com"
         git config --global user.name "watchpartyappmain"
-        echo Config Succeeded Successfully
+        echo Config Succeeded
         git remote add testing https://github.com/watchpartyappmain/TestingRepo1.git
         echo Remote Added Successfully
         git fetch --all
@@ -24,7 +24,7 @@ jobs:
       env:
         INPUT_GITHUB_TOKEN: ${{ secrets.personal_github_token }}
         REPOSITORY: 'watchpartyappmain/TestingRepo1'
-        INPUT_BRANCH: 'heroku-deploy'
+        INPUT_BRANCH: 'deploy-heroku'
       run: |
         remote_repo="https://watchpartymainapp:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
         git push "${remote_repo}" --delete ${INPUT_BRANCH} --force;
