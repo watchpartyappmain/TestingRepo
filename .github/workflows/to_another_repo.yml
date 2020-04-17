@@ -14,11 +14,16 @@ jobs:
       run: |
         git config --global user.email "watchpartyappmain@gmail.com"
         git config --global user.name "watchpartyappmain"
+        echo Config Succeeded Successfully
         git remote add testing https://github.com/watchpartyappmain/TestingRepo1.git
+        echo Remote Added Successfully
         git fetch --all
         git filter-branch --prune-empty --subdirectory-filter server master
+        echo Fetched and prunned server
         git push testing --delete deploy-heroku
+        echo Deleted deploy-heroku
         git checkout -b deploy-heroku
+        echo Checkedout new deploy-heroku branch
     - name: Push to Server Test Repo
       env:
         INPUT_GITHUB_TOKEN: ${{ secrets.personal_github_token }}
